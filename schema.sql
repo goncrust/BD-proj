@@ -64,7 +64,7 @@ CREATE TABLE Supplier (
     PRIMARY KEY(TIN)
 );
 
-CREATE TABLE supply-contract (
+CREATE TABLE "supply-contract" (
     TIN NUMERIC(9, 0) NOT NULL,
     sku VARCHAR(255) NOT NULL,
     "date" DATE NOT NULL,
@@ -130,5 +130,5 @@ CREATE TABLE delivery (
     TIN NUMERIC(9, 0) NOT NULL,
     PRIMARY KEY(address, TIN),
     FOREIGN KEY(address) REFERENCES Warehouse(address),
-    FOREIGN KEY(TIN) REFERENCES supply-contract(TIN)
+    FOREIGN KEY(TIN) REFERENCES "supply-contract"(TIN)
 );
