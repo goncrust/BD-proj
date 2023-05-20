@@ -1,7 +1,7 @@
 CREATE TABLE Customer (
     cust_no SERIAL NOT NULL,
-    name VARCHAR(255) NOT NULL UNIQUE,
-    email VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
     phone NUMERIC(9, 0) NOT NULL,
     address VARCHAR(255) NOT NULL,
     PRIMARY KEY(cust_no)
