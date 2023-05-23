@@ -16,18 +16,12 @@ CREATE TABLE "Order" (
     FOREIGN KEY(cust_no) REFERENCES Customer(cust_no)
 );
 
+-- (IC-1) Customers can only pay for the Sale of an Order they have placed themselves ((order_no, cust_no) in (Order.order_no, Order.cust_no))
 CREATE TABLE Sale (
     order_no INT NOT NULL,
+    cust_no INT,
     PRIMARY KEY(order_no),
-    FOREIGN KEY(order_no) REFERENCES "Order"(order_no)
-);
-
--- (IC-1) Customers can only pay for the Sale of an Order they have placed themselves ((order_no, cust_no) in (Order.order_no, Order.cust_no))
-CREATE TABLE pay (
-    order_no INT NOT NULL,
-    cust_no INT NOT NULL,
-    PRIMARY KEY(order_no),
-    FOREIGN KEY(order_no) REFERENCES Sale(order_no),
+    FOREIGN KEY(order_no) REFERENCES "Order"(order_no),
     FOREIGN KEY(cust_no) REFERENCES Customer(cust_no)
 );
 
@@ -66,7 +60,7 @@ CREATE TABLE Supplier (
 
 CREATE TABLE "supply-contract" (
     TIN NUMERIC(9, 0) NOT NULL,
-    sku VARCHAR(255) NOT NULL,
+    sku VARCHAR(255),
     "date" DATE NOT NULL,
     PRIMARY KEY(TIN),
     FOREIGN KEY(TIN) REFERENCES Supplier(TIN),
