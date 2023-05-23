@@ -36,7 +36,7 @@ CREATE TABLE Product (
 
 CREATE TABLE "EAN Product" (
     sku VARCHAR(255) NOT NULL,
-    ean INT NOT NULL,
+    ean NUMERIC(13, 0) NOT NULL,
     PRIMARY KEY(sku),
     FOREIGN KEY(sku) REFERENCES Product(sku)
 );
@@ -44,7 +44,7 @@ CREATE TABLE "EAN Product" (
 CREATE TABLE contains (
     order_no INT NOT NULL,
     sku VARCHAR(255) NOT NULL,
-    qty NUMERIC(13, 0) NOT NULL,
+    qty INT NOT NULL,
     PRIMARY KEY(order_no, sku),
     FOREIGN KEY(order_no) REFERENCES "Order"(order_no),
     FOREIGN KEY(sku) REFERENCES Product(sku)
