@@ -7,7 +7,7 @@ CREATE TABLE Customer (
     PRIMARY KEY(cust_no)
 );
 
--- (IC-2) Every Order (order_no) must participate in the contains association
+-- (IC-2) Any order_no in Order must exist in the contains relation
 CREATE TABLE "Order" (
     order_no SERIAL NOT NULL,
     "date" DATE NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE "Order" (
     FOREIGN KEY(cust_no) REFERENCES Customer(cust_no)
 );
 
--- (IC-1) Customers can only pay for the Sale of an Order they have placed themselves ((order_no, cust_no) in (Order.order_no, Order.cust_no))
+-- (IC-1) Customers can only pay for the Sale of an Order they have placed themselves ((order_no, payer_no) in (Order.order_no, Order.cust_no))
 CREATE TABLE Sale (
     order_no INT NOT NULL,
     payer_no INT,
@@ -25,7 +25,7 @@ CREATE TABLE Sale (
     FOREIGN KEY(payer_no) REFERENCES Customer(cust_no)
 );
 
--- (IC-3) Every Product (sku) must participate in the supply-contract association
+-- (IC-3) Any sku in Product must exist in the supply-contract relation
 CREATE TABLE Product (
     sku VARCHAR(255) NOT NULL,
     "name" VARCHAR(255) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE contains (
     FOREIGN KEY(sku) REFERENCES Product(sku)
 );
 
--- (IC-4) Every Supplier (TIN) must participate in the supply-contract association
+-- (IC-4) Any TIN in Supplier must exist in the supply-contract relation
 CREATE TABLE Supplier (
     TIN NUMERIC(9, 0) NOT NULL,
     "name" VARCHAR(255) NOT NULL,
@@ -60,14 +60,14 @@ CREATE TABLE Supplier (
 
 CREATE TABLE "supply-contract" (
     TIN NUMERIC(9, 0) NOT NULL,
-    sku VARCHAR(255),
+    sku VARCHAR(255) NOT NULL,
     "date" DATE NOT NULL,
     PRIMARY KEY(TIN),
     FOREIGN KEY(TIN) REFERENCES Supplier(TIN),
     FOREIGN KEY(sku) REFERENCES Product(sku)
 );
 
--- (IC-5) Every Employee (ssn) must participate in the works association
+-- (IC-5) Any ssn in Employee must exist in the works relation
 CREATE TABLE Employee (
     ssn NUMERIC(11, 0) NOT NULL,
     TIN NUMERIC(9, 0) NOT NULL UNIQUE,
