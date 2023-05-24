@@ -19,8 +19,8 @@ VALUES
     
 INSERT INTO "Order"
 VALUES
-    (DEFAULT, '2023-05-21', 2),
-    (DEFAULT, '2023-05-22', 1),
+    (DEFAULT, '2023-01-26', 2),
+    (DEFAULT, '2023-01-28', 1),
     (DEFAULT, '2023-05-22', 2),
     (DEFAULT, '2023-05-23', 3);
     
@@ -54,7 +54,7 @@ VALUES
     (543210094, '26H1UR7', '2022-12-03'),
     (943290854, '37J0LX1', '2022-12-03'),
     (312905843, '32C1VQ4', '2023-01-24'),
-    (487542039, '10P9QV2', '2023-04-08'),
+    (487542039, '10P9QV2', '2023-01-25'),
     (123409876, '99F5MN6', '2023-05-19');
     
 INSERT INTO Employee
@@ -97,7 +97,8 @@ VALUES
     (19374543511, 'Processamento de encomendas', 'R. Alberto Portinhol, 2321-412'),
     (32948179321, 'Processamento de encomendas', 'Av. Argélio Teixeira 3271-231'),
     (65849059803, 'Apoio ao cliente', 'R. Mendes Ribeiro Silva Carminho, 9999-32'),
-    (19374543511, 'Marketing', 'R. Mendes Ribeiro Silva Carminho, 9999-32');
+    (32948179321, 'Apoio ao cliente', 'R. Mendes Ribeiro Silva Carminho, 9999-32'),
+    (89438992384, 'Marketing', 'R. Mendes Ribeiro Silva Carminho, 9999-32');
     
 INSERT INTO delivery
 VALUES
