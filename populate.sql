@@ -9,11 +9,13 @@ VALUES
     ('26H1UR7', 'Deodorant', 'Prevent and mask body odor', 656),
     ('37J0LX1', 'Shampoo', 'Clean hair', 799),
     ('10P9QV2', 'Body wash', 'Clean the body', 1599),
-    ('99F5MN6', 'Bath sponge', 'Sponges for the shower', 149);
+    ('99F5MN6', 'Bath sponge', 'Sponges for the shower', 149),
+    ('32C1VQ4', 'Bath tub', 'Take a shower in it', 74900);
     
 INSERT INTO "EAN Product"
 VALUES
-    ('26H1UR7', 1098467501207);
+    ('26H1UR7', 1098467501207),
+    ('32C1VQ4', 5483210347392);
     
 INSERT INTO "Order"
 VALUES
@@ -36,19 +38,22 @@ VALUES
     (1, '10P9QV2', 1),
     (2, '37J0LX1', 3),
     (3, '26H1UR7', 4),
-    (4, '99F5MN6', 100);
+    (4, '99F5MN6', 100),
+    (4, '32C1VQ4', 1);
     
 INSERT INTO Supplier
 VALUES
     (123409876, 'Bed Bath & Beyond', '96-05 Queens Blvd, Queens, NY 11374, EUA'),
     (543210094, 'Espaço Casa', 'R. Angelina Vidal 12-A R/C, 1170-019 Lisboa'),
     (943290854, 'Leroy Merlin', 'Av. Berlim 10, 1800-038 Lisboa'),
-    (487542039, 'Lidl', 'R. Américo Rodrigues Barbosa 29, 4710-008 Braga');
+    (487542039, 'Lidl', 'R. Américo Rodrigues Barbosa 29, 4710-008 Braga'),
+    (312905843, 'IKEA', 'Zona Industrial de Alfragide Estrada Nacional 117, 2614-520 Amadora');
     
 INSERT INTO "supply-contract"
 VALUES
     (543210094, '26H1UR7', '2022-12-03'),
     (943290854, '37J0LX1', '2022-12-03'),
+    (312905843, '32C1VQ4', '2023-01-24'),
     (487542039, '10P9QV2', '2023-04-08'),
     (123409876, '99F5MN6', '2023-05-19');
     
@@ -99,4 +104,5 @@ VALUES
     ('R. Alberto Portinhol, 2321-412', 543210094),
     ('Av. Argélio Teixeira 3271-231', 123409876),
     ('R. Alberto Portinhol, 2321-412', 943290854),
-    ('R. Alberto Portinhol, 2321-412', 487542039);
+    ('R. Alberto Portinhol, 2321-412', 487542039),
+    ('Av. Argélio Teixeira 3271-231', 312905843);
