@@ -10,7 +10,7 @@ VALUES
     ('37J0LX1', 'Shampoo', 'Clean hair', 799),
     ('10P9QV2', 'Body wash', 'Clean the body', 1599),
     ('99F5MN6', 'Bath sponge', 'Sponges for the shower', 149),
-    ('32C1VQ4', 'Bath tub', 'Take a shower in it', 74900);
+    ('32C1VQ4', 'Bath tub', 'Take a bath in it', 74900);
     
 INSERT INTO "EAN Product"
 VALUES
