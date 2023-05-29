@@ -1,16 +1,16 @@
 CREATE TABLE Customer (
     cust_no SERIAL NOT NULL,
-    "name" VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    phone NUMERIC(9, 0) NOT NULL,
-    "address" VARCHAR(255) NOT NULL,
+    "name" VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
+    phone NUMERIC(9, 0),
+    "address" VARCHAR(255),
     PRIMARY KEY(cust_no)
 );
 
 -- (IC-2) Any order_no in Order must exist in the contains relation
 CREATE TABLE "Order" (
     order_no SERIAL NOT NULL,
-    "date" DATE NOT NULL,
+    "date" DATE,
     cust_no INT NOT NULL,
     PRIMARY KEY(order_no),
     FOREIGN KEY(cust_no) REFERENCES Customer(cust_no)
@@ -28,15 +28,16 @@ CREATE TABLE Sale (
 -- (IC-3) Any sku in Product must exist in the supply-contract relation
 CREATE TABLE Product (
     sku VARCHAR(255) NOT NULL,
-    "name" VARCHAR(255) NOT NULL,
+    "name" VARCHAR(255),
     "description" VARCHAR(255),
-    price INT NOT NULL,
+    price INT,
+    CHECK (price > 0),
     PRIMARY KEY(sku)
 );
 
 CREATE TABLE "EAN Product" (
     sku VARCHAR(255) NOT NULL,
-    ean NUMERIC(13, 0) NOT NULL,
+    ean NUMERIC(13, 0),
     PRIMARY KEY(sku),
     FOREIGN KEY(sku) REFERENCES Product(sku)
 );
@@ -44,7 +45,7 @@ CREATE TABLE "EAN Product" (
 CREATE TABLE contains (
     order_no INT NOT NULL,
     sku VARCHAR(255) NOT NULL,
-    qty INT NOT NULL,
+    qty INT,
     PRIMARY KEY(order_no, sku),
     FOREIGN KEY(order_no) REFERENCES "Order"(order_no),
     FOREIGN KEY(sku) REFERENCES Product(sku)
@@ -53,15 +54,15 @@ CREATE TABLE contains (
 -- (IC-4) Any TIN in Supplier must exist in the supply-contract relation
 CREATE TABLE Supplier (
     TIN NUMERIC(9, 0) NOT NULL,
-    "name" VARCHAR(255) NOT NULL,
-    "address" VARCHAR(255) NOT NULL,
+    "name" VARCHAR(255),
+    "address" VARCHAR(255),
     PRIMARY KEY(TIN)
 );
 
 CREATE TABLE "supply-contract" (
     TIN NUMERIC(9, 0) NOT NULL,
     sku VARCHAR(255) NOT NULL,
-    "date" DATE NOT NULL,
+    "date" DATE,
     PRIMARY KEY(TIN),
     FOREIGN KEY(TIN) REFERENCES Supplier(TIN),
     FOREIGN KEY(sku) REFERENCES Product(sku)
@@ -70,9 +71,9 @@ CREATE TABLE "supply-contract" (
 -- (IC-5) Any ssn in Employee must exist in the works relation
 CREATE TABLE Employee (
     ssn NUMERIC(11, 0) NOT NULL,
-    TIN NUMERIC(9, 0) NOT NULL UNIQUE,
-    bdate DATE NOT NULL,
-    "name" VARCHAR(255) NOT NULL,
+    TIN NUMERIC(9, 0),
+    bdate DATE,
+    "name" VARCHAR(255),
     PRIMARY KEY(ssn)
 );
 
@@ -91,8 +92,8 @@ CREATE TABLE Department (
 
 CREATE TABLE Workplace (
     "address" VARCHAR(255) NOT NULL,
-    lat NUMERIC(8, 6) NOT NULL,
-    "long" NUMERIC(9, 6) NOT NULL,
+    lat NUMERIC(8, 6),
+    "long" NUMERIC(9, 6),
     UNIQUE(lat, "long"),
     PRIMARY KEY("address")
 );
