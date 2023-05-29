@@ -21,7 +21,8 @@ CREATE TABLE Sale (
     order_no INT NOT NULL,
     payer_no INT,
     PRIMARY KEY(order_no),
-    FOREIGN KEY(order_no) REFERENCES "Order"(order_no),
+    FOREIGN KEY(order_no) REFERENCES "Order"(order_no)
+        ON DELETE CASCADE,
     FOREIGN KEY(payer_no) REFERENCES Customer(cust_no)
 );
 
@@ -40,6 +41,7 @@ CREATE TABLE "EAN Product" (
     ean NUMERIC(13, 0),
     PRIMARY KEY(sku),
     FOREIGN KEY(sku) REFERENCES Product(sku)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE contains (
@@ -102,12 +104,14 @@ CREATE TABLE Office (
     "address" VARCHAR(255) NOT NULL,
     PRIMARY KEY("address"),
     FOREIGN KEY("address") REFERENCES Workplace("address")
+        ON DELETE CASCADE
 );
 
 CREATE TABLE Warehouse (
     "address" VARCHAR(255) NOT NULL,
     PRIMARY KEY("address"),
     FOREIGN KEY("address") REFERENCES Workplace("address")
+        ON DELETE CASCADE
 );
 
 CREATE TABLE works (
