@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  <title>E3 - Projeto de BD</title>
+{% endblock %}
+
+{% block title%}
+  <h1>Empresa de Comércio Online</h1>
+{% endblock %}
+
+{% block body %}
+  <div class="dashboard">
+    {% for el in elements %}
+      <a href="{{ el.href }}">
+        <div class="link-button">{{ el.title }}</div>
+      </a>
+    {% endfor %}
+  </div>
+{% endblock %}
