@@ -10,12 +10,12 @@ def home():
             "title": "Gerir Clientes"
         },
         {
-            "url": "/gerir-fornecedores",
-            "title": "Gerir Fornecedores"
-        },
-        {
             "url": "/gerir-produtos",
             "title": "Gerir Produtos"
+        },
+        {
+            "url": "/gerir-fornecedores",
+            "title": "Gerir Fornecedores"
         },
         {
             "url": "/editar-produtos",
@@ -32,6 +32,26 @@ def home():
     ]
     return render_template('index.html', elements=elements)
 
-@app.route("/<action>")
+@app.route("/gerir-clientes", methods=["POST", "GET"])
+def gerir_clientes():
+    return render_template("gerir-clientes.html")
+
+@app.route("/gerir-produtos", methods=["POST", "GET"])
 def gerir_produtos():
-    return render_template(f"{action}.html")
+    return render_template("gerir-produtos.html")
+
+@app.route("/gerir-fornecedores", methods=["POST", "GET"])
+def gerir_fornecedores():
+    return render_template("gerir-fornecedores.html")
+
+@app.route("/editar-produtos", methods=["POST", "GET"])
+def editar_produtos():
+    return render_template("editar-produtos.html")
+
+@app.route("/pagar-encomenda", methods=["POST", "GET"])
+def pagar_encomenda():
+    return render_template("pagar-encomenda.html")
+
+@app.route("/realizar-encomenda", methods=["POST", "GET"])
+def realizar_encomenda():
+    return render_template("realizar-encomenda.html")

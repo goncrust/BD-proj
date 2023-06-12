@@ -11,7 +11,7 @@
 {% block body %}
   <div class="dashboard">
     {% for el in elements %}
-      <a href="{{ el.href }}">
+      <a href="{{ el.url }}">
         <div class="link-button">{{ el.title }}</div>
       </a>
     {% endfor %}
