@@ -9,4 +9,15 @@
 {% endblock %}
 
 {% block body %}
+    <form action="/pagar-encomenda" method="POST">
+        <label for="cust_no">ID do Cliente</label>
+        <br>
+        <input type="number" id="cust_no" required>
+        <br>
+        <label for="order_no">NO da Encomenda</label>
+        <br>
+        <input type="number" id="order_no" required>
+        <br>
+        <input type="submit" value="submit">
+    </form>    
 {% endblock %}

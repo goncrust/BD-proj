@@ -9,4 +9,19 @@
 {% endblock %}
 
 {% block body %}
+    <form action="/realizar-encomenda" method="POST">
+        <label for="cust_no">ID do Cliente</label>
+        <br>
+        <input type="text" id="cust_no" required>
+        <br>
+        <label for="products">Products, separated by commas (prod1,prod2,prod3)</label>
+        <br>
+        <input type="text" id="products" required>
+        <br>
+        <label for="qty">Quantities, separated by commas (qty1,qty2,qty3)</label>
+        <br>
+        <input type="text" id="qty" required>
+        <br>
+        <input type="submit" value="submit">
+    </form>    
 {% endblock %}

@@ -9,4 +9,12 @@
 {% endblock %}
 
 {% block body %}
+    <script src="{{url_for('static', filename='javascript/gerir-clientes.js')}}" defer></script>
+    <form action="/gerir-clientes" method="POST">
+        <input type="radio" id="delete" name="add-or-del">
+        <label for="delete">Apagar Cliente</label>
+        <input type="radio" id="add" name="add-or-del">
+        <label for="add">Adicionar Cliente</label>
+        <br>
+    </form>    
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
@@ -34,24 +34,42 @@ def home():
 
 @app.route("/gerir-clientes", methods=["POST", "GET"])
 def gerir_clientes():
-    return render_template("gerir-clientes.html")
+    if request.method == "POST":
+        return redirect("/")
+    else:
+        return render_template("gerir-clientes.html")
 
 @app.route("/gerir-produtos", methods=["POST", "GET"])
 def gerir_produtos():
-    return render_template("gerir-produtos.html")
+    if request.method == "POST":
+        return redirect("/")
+    else:
+        return render_template("gerir-produtos.html")
 
 @app.route("/gerir-fornecedores", methods=["POST", "GET"])
 def gerir_fornecedores():
-    return render_template("gerir-fornecedores.html")
+    if request.method == "POST":
+        return redirect("/")
+    else:
+        return render_template("gerir-fornecedores.html")
 
 @app.route("/editar-produtos", methods=["POST", "GET"])
 def editar_produtos():
-    return render_template("editar-produtos.html")
+    if request.method == "POST":
+        return redirect("/")
+    else:
+        return render_template("editar-produtos.html")
 
 @app.route("/pagar-encomenda", methods=["POST", "GET"])
 def pagar_encomenda():
-    return render_template("pagar-encomenda.html")
+    if request.method == "POST":
+        return redirect("/")
+    else:
+        return render_template("pagar-encomenda.html")
 
 @app.route("/realizar-encomenda", methods=["POST", "GET"])
 def realizar_encomenda():
-    return render_template("realizar-encomenda.html")
+    if request.method == "POST":
+        return redirect("/")
+    else:
+        return render_template("realizar-encomenda.html")
