@@ -25,12 +25,12 @@ CREATE TABLE orders(
     order_no INTEGER PRIMARY KEY,
     cust_no INTEGER NOT NULL REFERENCES customer,
     date DATE NOT NULL
-    –-order_no must exist in contains
+    --order_no must exist in contains
 );
 
 CREATE TABLE pay(
     order_no INTEGER PRIMARY KEY REFERENCES orders,
-    cust_no INTEGER NOT NULL REFERENCES customer,
+    cust_no INTEGER NOT NULL REFERENCES customer
 );
 
 CREATE TABLE employee(
