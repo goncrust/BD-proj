@@ -21,7 +21,7 @@ const onChangeDel = (e) => {
     label.innerHTML = "SKU";
     input.type = "text";
     input.id = "id";
-    input.setAttribute(required, "");
+    input.setAttribute("required", "");
 
     fieldset.appendChild(label);
     fieldset.appendChild(br[0]);
@@ -59,28 +59,28 @@ const onChangeAdd = (e) => {
     skuLabel.innerHTML = "SKU";
     skuInput.type = "text";
     skuInput.id = "sku";
-    skuInput.setAttribute(required, "");
+    skuInput.setAttribute("required", "");
 
     nameLabel.for = "name";
     nameLabel.id = "name-label";
     nameLabel.innerHTML = "Name";
     nameInput.type = "text";
     nameInput.id = "name";
-    nameInput.setAttribute(required, "");
+    nameInput.setAttribute("required", "");
 
     descriptionLabel.for = "description";
     descriptionLabel.id = "description-label";
     descriptionLabel.innerHTML = "Description";
     descriptionInput.type = "text";
     descriptionInput.id = "description";
-    descriptionInput.setAttribute(required, "");
+    descriptionInput.setAttribute("required", "");
 
     priceLabel.for = "price";
     priceLabel.id = "price-label";
     priceLabel.innerHTML = "Price";
     priceInput.type = "number";
     priceInput.id = "price";
-    priceInput.setAttribute(required, "");
+    priceInput.setAttribute("required", "");
 
     fieldset.appendChild(skuLabel);
     fieldset.appendChild(br[0]);

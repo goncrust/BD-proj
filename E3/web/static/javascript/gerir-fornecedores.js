@@ -21,7 +21,7 @@ const onChangeDel = (e) => {
     label.innerHTML = "TIN";
     input.type = "text";
     input.id = "id";
-    input.setAttribute(required, "");
+    input.setAttribute("required", "");
 
     fieldset.appendChild(label);
     fieldset.appendChild(br[0]);
@@ -57,21 +57,21 @@ const onChangeAdd = (e) => {
     tinLabel.innerHTML = "TIN";
     tinInput.type = "number";
     tinInput.id = "tin";
-    tinInput.setAttribute(required, "");
+    tinInput.setAttribute("required", "");
 
     nameLabel.for = "name";
     nameLabel.id = "name-label";
     nameLabel.innerHTML = "Name";
     nameInput.type = "text";
     nameInput.id = "name";
-    nameInput.setAttribute(required, "");
+    nameInput.setAttribute("required", "");
 
     addressLabel.for = "address";
     addressLabel.id = "address-label";
     addressLabel.innerHTML = "Address";
     addressInput.type = "text";
     addressInput.id = "address";
-    addressInput.setAttribute(required, "");
+    addressInput.setAttribute("required", "");
 
     fieldset.appendChild(tinLabel);
     fieldset.appendChild(br[0]);

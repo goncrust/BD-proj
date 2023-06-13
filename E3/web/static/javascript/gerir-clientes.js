@@ -21,7 +21,7 @@ const onChangeDel = (e) => {
     label.innerHTML = "ID do Cliente";
     input.type = "text";
     input.id = "id";
-    input.setAttribute(required, "");
+    input.setAttribute("required", "");
 
     fieldset.appendChild(label);
     fieldset.appendChild(br[0]);
@@ -59,28 +59,28 @@ const onChangeAdd = (e) => {
     nameLabel.innerHTML = "Name";
     nameInput.type = "text";
     nameInput.id = "name";
-    nameInput.setAttribute(required, "");
+    nameInput.setAttribute("required", "");
 
     emailLabel.for = "email";
     emailLabel.id = "email-label";
     emailLabel.innerHTML = "Email";
     emailInput.type = "email";
     emailInput.id = "email";
-    emailInput.setAttribute(required, "");
+    emailInput.setAttribute("required", "");
 
     phoneLabel.for = "phone";
     phoneLabel.id = "phone-label";
     phoneLabel.innerHTML = "Phone";
     phoneInput.type = "number";
     phoneInput.id = "phone";
-    phoneInput.setAttribute(required, "");
+    phoneInput.setAttribute("required", "");
 
     addressLabel.for = "address";
     addressLabel.id = "address-label";
     addressLabel.innerHTML = "Address";
     addressInput.type = "text";
     addressInput.id = "address";
-    addressInput.setAttribute(required, "");
+    addressInput.setAttribute("required", "");
 
     fieldset.appendChild(nameLabel);
     fieldset.appendChild(br[0]);
