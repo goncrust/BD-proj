@@ -6,10 +6,10 @@ VALUES
 
 INSERT INTO orders
 VALUES
-    (1, '2023-01-26', 2),
-    (2, '2023-01-28', 1),
-    (3, '2023-05-22', 2),
-    (4, '2023-05-23', 3);
+    (1, 2, '2023-01-26'),
+    (2, 1, '2023-01-28'),
+    (3, 2, '2023-05-22'),
+    (4, 3, '2023-05-23');
 
 INSERT INTO pay
 VALUES
@@ -56,7 +56,7 @@ VALUES
 INSERT INTO works
 VALUES
     ('19374543511', 'Processamento de encomendas', 'R. Alberto Portinhol, 2321-412 Braga'),
-    ('32948179321', 'Processamento de encomendas', 'Av. Argélio Teixeira 3271-231 Santarém'),
+    ('32948179321', 'Processamento de encomendas', 'Av. Argélio Teixeira, 3271-231 Santarém'),
     ('65849059803', 'Apoio ao cliente', 'R. Mendes Ribeiro Silva Carminho, 9999-322 Lisboa'),
     ('32948179321', 'Apoio ao cliente', 'R. Mendes Ribeiro Silva Carminho, 9999-322 Lisboa'),
     ('89438992384', 'Marketing', 'R. Mendes Ribeiro Silva Carminho, 9999-322 Lisboa');
@@ -90,7 +90,7 @@ VALUES
 INSERT INTO delivery
 VALUES
     ('R. Alberto Portinhol, 2321-412 Braga', '543210094'),
-    ('Av. Argélio Teixeira 3271-231 Santarém', '123409876'),
+    ('Av. Argélio Teixeira, 3271-231 Santarém', '123409876'),
     ('R. Alberto Portinhol, 2321-412 Braga', '943290854'),
     ('R. Alberto Portinhol, 2321-412 Braga', '487542039'),
-    ('Av. Argélio Teixeira 3271-231 Santarém', '312905843');
+    ('Av. Argélio Teixeira, 3271-231 Santarém', '312905843');
