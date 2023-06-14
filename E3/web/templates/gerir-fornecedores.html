@@ -9,12 +9,35 @@
 {% endblock %}
 
 {% block body %}
-    <script src="{{url_for('static', filename='javascript/gerir-fornecedores.js')}}" defer></script>
-    <form action="/gerir-clientes" method="POST">
-        <input type="radio" id="delete" name="add-or-del">
-        <label for="delete">Apagar Fornecedor</label>
-        <input type="radio" id="add" name="add-or-del">
-        <label for="add">Adicionar Fornecedor</label>
-        <br>
-    </form>    
+    <div class="management-grid">
+        <div class="elements">
+            {% if suppliers is empty %}
+                <h2>Não existem fornecedores.</h2>
+            {% endif %}
+            {% for supplier in suppliers %}
+                <form action="/gerir-fornecedores/{{ suplier.id }}/delete" method="POST">
+                    <label>Fornecedor nº {{ supplier.id }}, {{ supplier.name }}</label>
+                    <input id="delete-{{ supplier.id }}" type="submit" value="Apagar">
+                </form>
+            {% endfor %}
+        </div>
+        <div class="add-form">
+            <h2>Novo Fornecedor</h2>
+            <form action="/gerir-fornecedores/add" method="POST">
+                <label for="tin">TIN</label>
+                <br>
+                <input id="tin" type="number" name="tin" required>
+                <br>
+                <label for="name">Name</label>
+                <br>
+                <input id="name" type="text" name="name" required>
+                <br>
+                <label for="address">Address</label>
+                <br>
+                <input id="address" type="text" name="address" required>
+                <br>
+                <input id="submit" type="submit" value="Adicionar">
+            </form>    
+        </div>
+    </div>
 {% endblock %}

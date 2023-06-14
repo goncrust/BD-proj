@@ -53,6 +53,14 @@ input[type="submit"] {
   border: 2px solid #cecccf;
   border-radius: 1rem;
   height: 3rem;
+
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+input[type="submit"]:hover {
+  border: 2px solid #000100;
 }
 
 a,
@@ -89,4 +97,19 @@ a:active {
   justify-items: center;
   justify-content: center;
   gap: 2rem;
+}
+
+.management-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 36rem);
+  place-items: center;
+  place-content: center;
+}
+
+.add-form {
+  text-align: center;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: #000100;
 }

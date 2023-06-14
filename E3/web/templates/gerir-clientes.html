@@ -9,12 +9,39 @@
 {% endblock %}
 
 {% block body %}
-    <script src="{{url_for('static', filename='javascript/gerir-clientes.js')}}" defer></script>
-    <form action="/gerir-clientes" method="POST">
-        <input type="radio" id="delete" name="add-or-del">
-        <label for="delete">Apagar Cliente</label>
-        <input type="radio" id="add" name="add-or-del">
-        <label for="add">Adicionar Cliente</label>
-        <br>
-    </form>    
+    <div class="management-grid">
+        <div class="elements">
+            {% if clients is empty %}
+                <h2>Não existem clientes.</h2>
+            {% endif %}
+            {% for client in clients %}
+                <form action="/gerir-clientes/{{ client.id }}/delete" method="POST">
+                    <label>Cliente nº {{ client.id }}, {{ client.name }}</label>
+                    <input id="delete-{{ client.id }}" type="submit" value="Apagar">
+                </form>
+            {% endfor %}
+        </div>
+        <div class="add-form">
+            <h2>Novo Cliente</h2>
+            <form action="/gerir-clientes/add" method="POST">
+                <label for="name">Nome</label>
+                <br>
+                <input id="name" type="text" name="name" required>
+                <br>
+                <label for="email">Email</label>
+                <br>
+                <input id="email" type="email" name="email" required>
+                <br>
+                <label for="phone">Telemóvel</label>
+                <br>
+                <input id="phone" type="number" name="phone">
+                <br>
+                <label for="address">Morada</label>
+                <br>
+                <input id="address" type="text" name="address">
+                <br>
+                <input id="submit" type="submit" value="Adicionar">
+            </form>    
+        </div>
+    </div>
 {% endblock %}

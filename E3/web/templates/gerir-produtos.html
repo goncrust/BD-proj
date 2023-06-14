@@ -9,12 +9,43 @@
 {% endblock %}
 
 {% block body %}
-    <script src="{{url_for('static', filename='javascript/gerir-produtos.js')}}" defer></script>
-    <form action="/gerir-clientes" method="POST">
-        <input type="radio" id="delete" name="add-or-del">
-        <label for="delete">Apagar Produto</label>
-        <input type="radio" id="add" name="add-or-del">
-        <label for="add">Adicionar Produto</label>
-        <br>
-    </form>
+    <div class="management-grid">
+        <div class="elements">
+            {% if products is empty %}
+                <h2>Não existem produtos.</h2>
+            {% endif %}
+            {% for product in products %}
+                <form action="/gerir-produtos/{{ product.id }}/delete" method="POST">
+                    <label>Produto nº {{ product.id }}, {{ product.name }}</label>
+                    <input id="delete-{{ product.id }}" type="submit" value="Apagar">
+                </form>
+            {% endfor %}
+        </div>
+        <div class="add-form">
+            <h2>Novo Produto</h2>
+            <form action="/gerir-produtos/add" method="POST">
+                <label for="sku">SKU</label>
+                <br>
+                <input id="sku" type="text" name="sku" required>
+                <br>
+                <label for="name">Nome</label>
+                <br>
+                <input id="name" type="text" name="name" required>
+                <br>
+                <label for="description">Descrição (Opcional)</label>
+                <br>
+                <input id="description" type="text" name="description">
+                <br>
+                <label>EAN (Opcional)</label>
+                <br>
+                <input id="ean" type="number" name="ean">
+                <br>
+                <label for="price">Price</label>
+                <br>
+                <input id="price" type="number" name="price" required>
+                <br>
+                <input id="submit" type="submit" value="Adicionar">
+            </form>
+        </div>
+    </div>
 {% endblock %}
