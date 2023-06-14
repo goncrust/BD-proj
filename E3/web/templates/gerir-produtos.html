@@ -11,7 +11,7 @@
 {% block body %}
     <div class="management-grid">
         <div class="elements">
-            {% if products is empty %}
+            {% if not products %}
                 <h2>Não existem produtos.</h2>
             {% endif %}
             {% for product in products %}
@@ -40,7 +40,7 @@
                 <br>
                 <input id="ean" type="number" name="ean">
                 <br>
-                <label for="price">Price</label>
+                <label for="price">Preço</label>
                 <br>
                 <input id="price" type="number" name="price" required>
                 <br>

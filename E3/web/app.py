@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from flask import Flask, render_template, request, redirect, flash, url_for
 from psycopg_pool import ConnectionPool
+from datetime import datetime
 import psycopg
 import os
 import re
@@ -77,22 +78,24 @@ def gerir_clientes_add():
     else:
         with pool.connection() as conn:
             with conn.cursor() as cursor:
-                existing_email = cursor.execute("SELECT email FROM customer WHERE email = %(email)s;", {"email": email}).fetchone()[0]
-                if existing_email:
-                    flash("O email já existe")
-                else:
-                    cust_no = cursor.execute("SELECT MAX(cust_no) FROM customer;").fetchone()[0]
-                    if not cust_no:
-                        cust_no = 1
-                    else:
-                        cust_no += 1
+                if email != "NULL":
+                    existing_email = cursor.execute("SELECT email FROM customer WHERE email = %(email)s;", {"email": email}).fetchone()[0]
+                    if existing_email:
+                        flash("O email já existe")
+                        return redirect("/gerir-clientes")
 
-                    cursor.execute(
-                        """
-                        INSERT INTO customer VALUES
-                        (%(cust_no)s, %(name)s, %(email)s, %(phone)s, %(address)s);
-                        """,
-                        {"cust_no": cust_no, "name": name, "email": email, "phone": phone, "address": address})
+                cust_no = cursor.execute("SELECT MAX(cust_no) FROM customer;").fetchone()[0]
+                if not cust_no:
+                    cust_no = 1
+                else:
+                    cust_no += 1
+
+                cursor.execute(
+                    """
+                    INSERT INTO customer VALUES
+                    (%(cust_no)s, %(name)s, %(email)s, %(phone)s, %(address)s);
+                    """,
+                    {"cust_no": cust_no, "name": name, "email": email, "phone": phone, "address": address})
 
     return redirect("/gerir-clientes")
 
@@ -109,7 +112,10 @@ def gerir_produtos():
 def gerir_produtos_delete(sku):
     with pool.connection() as conn:
         with conn.cursor() as cursor:
+            cursor.execute("START TRANSACTION;")
+            cursor.execute("DELETE FROM supplier WHERE sku = %(sku)s;", {"sku": sku})
             cursor.execute("DELETE FROM product WHERE sku = %(sku)s;", {"sku": sku})
+            cursor.execute("COMMIT;")
     return redirect("/gerir-produtos")
 
 @app.route("/gerir-produtos/add", methods=("POST",))
@@ -122,7 +128,7 @@ def gerir_produtos_add():
     error = ""
     
     if not sku:
-        error = "Sku inválido"
+        error = "SKU inválido"
     elif not name:
         error = "Nome inválido"
     elif not price or not price.isnumeric():
@@ -148,11 +154,11 @@ def gerir_produtos_add():
                     cursor.execute(
                         """
                         INSERT INTO product VALUES
-                        (%(sku)s, %(name)s, %(email)s, %(phone)s, %(address)s);
+                        (%(sku)s, %(name)s, %(description)s, %(price)s, %(ean)s);
                         """,
                         {"sku": sku, "name": name, "description": description, "price": price, "ean": ean})
 
-    return redirect("/gerir-clientes")
+    return redirect("/gerir-produtos")
 
 @app.route("/gerir-fornecedores", methods=("GET",))
 def gerir_fornecedores():
@@ -172,9 +178,37 @@ def gerir_fornecedores_delete(tin):
 
 @app.route("/gerir-fornecedores/add", methods=("POST",))
 def gerir_fornecedores_add():
-    with pool.connection() as conn:
-        with conn.cursor() as cursor:
-            pass
+    tin = request.form["tin"]
+    name = request.form["name"] if request.form["name"] else "NULL"
+    address = request.form["address"] if request.form["address"] else "NULL"
+    sku = request.form["sku"]
+    error = ""
+    
+    if not tin:
+        error = "TIN inválido"
+    elif not sku:
+        error = "SKU inválido"
+
+    if error:
+        flash(error)
+    else:
+        with pool.connection() as conn:
+            with conn.cursor() as cursor:
+                existing_tin = cursor.execute("SELECT tin FROM supplier WHERE tin = %(tin)s;", {"tin": tin}).fetchone()[0]
+                if existing_tin:
+                    error = "O TIN já existe"
+                existing_sku = cursor.execute("SELECT sku FROM supplier WHERE sku = %(sku)s;", {"sku": sku}).fetchone()[0]
+                if not existing_sku:
+                    error = "O SKU não existe"
+                if error:
+                    flash(error)
+                else:
+                    cursor.execute(
+                        """
+                        INSERT INTO supplier VALUES
+                        (%(tin)s, %(name)s, %(address)s, %(sku)s, %(date)s);
+                        """,
+                        {"tin": tin, "name": name, "address": address, "sku": sku, "date": datetime.now().strftime("%Y-%m-%d")})
     return redirect("/gerir-fornecedores")
 
 @app.route("/editar-produtos", methods=["POST", "GET"])

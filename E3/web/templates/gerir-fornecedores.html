@@ -11,11 +11,11 @@
 {% block body %}
     <div class="management-grid">
         <div class="elements">
-            {% if suppliers is empty %}
+            {% if not suppliers %}
                 <h2>Não existem fornecedores.</h2>
             {% endif %}
             {% for supplier in suppliers %}
-                <form action="/gerir-fornecedores/{{ suplier.id }}/delete" method="POST">
+                <form action="/gerir-fornecedores/{{ supplier.id }}/delete" method="POST">
                     <label>Fornecedor nº {{ supplier.id }}, {{ supplier.name }}</label>
                     <input id="delete-{{ supplier.id }}" type="submit" value="Apagar">
                 </form>
@@ -28,13 +28,17 @@
                 <br>
                 <input id="tin" type="number" name="tin" required>
                 <br>
-                <label for="name">Name</label>
+                <label for="name">Nome (Opcional)</label>
                 <br>
-                <input id="name" type="text" name="name" required>
+                <input id="name" type="text" name="name">
                 <br>
-                <label for="address">Address</label>
+                <label for="address">Morada (Opcional)</label>
                 <br>
-                <input id="address" type="text" name="address" required>
+                <input id="address" type="text" name="address">
+                <br>
+                <label for="address">SKU</label>
+                <br>
+                <input id="sku" type="text" name="sku" required>
                 <br>
                 <input id="submit" type="submit" value="Adicionar">
             </form>    

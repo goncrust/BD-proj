@@ -11,7 +11,7 @@
 {% block body %}
     <div class="management-grid">
         <div class="elements">
-            {% if clients is empty %}
+            {% if not clients %}
                 <h2>Não existem clientes.</h2>
             {% endif %}
             {% for client in clients %}
@@ -32,11 +32,11 @@
                 <br>
                 <input id="email" type="email" name="email" required>
                 <br>
-                <label for="phone">Telemóvel</label>
+                <label for="phone">Telemóvel (Opcional)</label>
                 <br>
                 <input id="phone" type="number" name="phone">
                 <br>
-                <label for="address">Morada</label>
+                <label for="address">Morada (Opcional)</label>
                 <br>
                 <input id="address" type="text" name="address">
                 <br>
