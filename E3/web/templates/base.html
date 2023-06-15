@@ -19,7 +19,7 @@
     {% block head %} {% endblock %}
   </head>
   <body>
-    <nav>{% block title %} {% endblock %}</nav>
+    <nav><a href="/">{% block title %} {% endblock %}</a></nav>
 
     {% with messages = get_flashed_messages() %}
       {% if messages %}

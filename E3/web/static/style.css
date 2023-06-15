@@ -92,12 +92,25 @@ a:active {
   border: 2px solid #000100;
 }
 
-.dashboard {
+.dashboard-top {
   display: grid;
-  grid-template-columns: repeat(3, 18rem);
+  grid-template-columns: repeat(6, 9rem);
   justify-items: center;
   justify-content: center;
   gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.dashboard-bottom {
+  display: grid;
+  grid-template-columns: repeat(2, 18rem);
+  justify-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.top-element {
+  grid-column: span 2 / span 2;
 }
 
 .management-grid {

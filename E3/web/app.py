@@ -19,20 +19,29 @@ app.secret_key = "12345"
 def home():
     elements =  [
         {
+            "isTop": 1,
             "url": "/gerir-clientes",
             "title": "Gerir Clientes"
         },
         {
+            "isTop": 1,
             "url": "/gerir-produtos",
             "title": "Gerir Produtos"
         },
         {
+            "isTop": 1,
             "url": "/gerir-fornecedores",
             "title": "Gerir Fornecedores"
         },
         {
+            "isTop": 0,
             "url": "/gerir-encomendas",
             "title": "Gerir Encomendas"
+        },
+        {
+            "isTop": 0,
+            "url": "/realizar-encomenda",
+            "title": "Realizar Encomenda"
         }
     ]
     return render_template('index.html', elements=elements)
@@ -41,7 +50,7 @@ def home():
 def gerir_clientes():
     with pool.connection() as conn:
         with conn.cursor() as cursor:
-            cursor.execute("SELECT cust_no, name FROM customer WHERE NOT email LIKE '%deleted';")
+            cursor.execute("SELECT cust_no, name FROM customer WHERE NOT email LIKE '%%deleted';")
             parser = lambda el : {"id": el[0], "name": el[1]}
             clients = list(map(parser, cursor.fetchall()))
     return render_template("gerir-clientes.html", clients=clients)
@@ -319,8 +328,48 @@ def gerir_encomendas():
 
     return render_template("gerir-encomendas.html", orders=orders, sales=sales)
 
-@app.route("/gerir-encomendas/new", methods=("POST", "GET"))
-def gerir_encomendas_new():
+@app.route("/gerir-encomendas/pay", methods=("POST",))
+def gerir_encomenda_pay():
+    cust_no = request.form["cust_no"]
+    order_no = request.form["order_no"]
+    error = ""
+
+    if not cust_no:
+        error = "Número de cliente inválido"
+    elif not order_no:
+        error = "Número de encomenda inválido"
+
+    if error:
+        flash(error)
+    else:
+        with pool.connection() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("START TRANSACTION;")
+                existing_cust_no = cursor.execute("SELECT cust_no FROM customer WHERE cust_no = %(cust_no)s AND NOT email LIKE '%%deleted';", {"cust_no": cust_no}).fetchone()
+                if not existing_cust_no:
+                    error = "O número de cliente não existe"
+                existing_order_no = cursor.execute("SELECT order_no FROM orders WHERE order_no = %(order_no)s;", {"order_no": order_no}).fetchone()
+                if not existing_order_no:
+                    error = "O número de encomenda não existe"
+                ordered_by_client = cursor.execute("SELECT order_no FROM orders WHERE order_no = %(order_no)s AND cust_no = %(cust_no)s;", {"order_no": order_no, "cust_no": cust_no}).fetchone()
+                if not ordered_by_client:
+                    error = "A encomenda não foi feita por este cliente"
+
+                if error:
+                    flash(error)
+                else:
+                    cursor.execute(
+                        """
+                        INSERT INTO pay VALUES
+                        (%(order_no)s, %(cust_no)s);
+                        """,
+                        {"order_no": order_no, "cust_no": cust_no})
+                cursor.execute("COMMIT;")
+
+    return redirect("/gerir-encomendas")
+
+@app.route("/realizar-encomenda", methods=("POST", "GET"))
+def realizar_encomenda():
     if request.method == "POST":
         cust_no = request.form["cust_no"]
         products = []
@@ -334,6 +383,8 @@ def gerir_encomendas_new():
     
         if not cust_no:
             error = "Número de cliente inválido"
+        elif not products:
+            error = "Nenhum produto selecionado"
     
         if error:
             flash(error)
@@ -341,14 +392,14 @@ def gerir_encomendas_new():
             with pool.connection() as conn:
                 with conn.cursor() as cursor:
                     cursor.execute("START TRANSACTION;")
-                    existing_cust_no = cursor.execute("SELECT cust_no FROM customer WHERE cust_no = %(cust_no)s AND NOT email LIKE '%deleted';", {"cust_no": cust_no}).fetchone()
+                    existing_cust_no = cursor.execute("SELECT cust_no FROM customer WHERE cust_no = %(cust_no)s AND NOT email LIKE '%%deleted';", {"cust_no": cust_no}).fetchone()
                     if not existing_cust_no:
                         error = "O número de cliente não existe"
                     else:
                         for product in products:
                             existing_sku = cursor.execute("SELECT sku FROM product WHERE sku = %(sku)s;", {"sku": product[0]}).fetchone()
                             if not existing_sku:
-                                error = f"O produto {product[0]} já não existe"
+                                error = "Um dos produtos que encomendou já não existe"
                                 break
                     if error:
                         flash(error)
@@ -378,46 +429,6 @@ def gerir_encomendas_new():
                 parser = lambda el : {"id": el[0], "name": el[1]}
                 products = list(map(parser, cursor.fetchall()))
         return render_template("realizar-encomenda.html", products=products)
-
-@app.route("/gerir-encomendas/pay", methods=("POST",))
-def realizar_encomenda():
-    cust_no = request.form["cust_no"]
-    order_no = request.form["order_no"]
-    error = ""
-
-    if not cust_no:
-        error = "Número de cliente inválido"
-    elif not order_no:
-        error = "Número de encomenda inválido"
-
-    if error:
-        flash(error)
-    else:
-        with pool.connection() as conn:
-            with conn.cursor() as cursor:
-                cursor.execute("START TRANSACTION;")
-                existing_cust_no = cursor.execute("SELECT cust_no FROM customer WHERE cust_no = %(cust_no)s AND NOT email LIKE '%deleted';", {"cust_no": cust_no}).fetchone()
-                if not existing_cust_no:
-                    error = "O número de cliente não existe"
-                existing_order_no = cursor.execute("SELECT order_no FROM orders WHERE order_no = %(order_no)s;", {"order_no": order_no}).fetchone()
-                if not existing_order_no:
-                    error = "O número de encomenda não existe"
-                ordered_by_client = cursor.execute("SELECT order_no FROM orders WHERE order_no = %(order_no)s AND cust_no = %(cust_no)s;", {"order_no": order_no, "cust_no": cust_no}).fetchone()
-                if not ordered_by_client:
-                    error = "A encomenda não foi feita por este cliente"
-
-                if error:
-                    flash(error)
-                else:
-                    cursor.execute(
-                        """
-                        INSERT INTO pay VALUES
-                        (%(order_no)s, %(cust_no)s);
-                        """,
-                        {"order_no": order_no, "cust_no": cust_no})
-                cursor.execute("COMMIT;")
-
-    return redirect("/gerir-encomendas")
 
 if __name__ == "__main__":
     app.run()
