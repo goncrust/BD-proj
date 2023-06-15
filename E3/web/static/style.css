@@ -74,6 +74,7 @@ a:active {
 }
 
 .link-button {
+  margin: auto;
   text-align: center;
   font-family: "Josefin Sans", sans-serif;
   font-size: 1.5rem;
@@ -112,4 +113,48 @@ a:active {
   font-size: 1.25rem;
   line-height: 1.75rem;
   color: #000100;
+}
+
+.product-name {
+  text-align: center;
+  grid-column: span 2 / span 2;
+}
+
+.product-edit-delete {
+  font-size: 1.5rem;
+  font-family: "Josefin Sans", sans-serif;
+  display: grid;
+  grid-template-columns: repeat(2, 18rem);
+  gap: 1rem;
+  place-items: center;
+  place-content: center;
+}
+
+.edit-btn,
+.del-btn {
+  width: 18rem;
+}
+
+.flash {
+  text-align: center;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: #000100;
+  margin-bottom: 5rem;
+}
+
+.sale,
+.order {
+  font-size: 1.5rem;
+  font-family: "Josefin Sans", sans-serif;
+  text-align: center;
+}
+
+.elements {
+  margin: auto;
+  width: 36rem;
+  font-size: 1.5rem;
+  font-family: "Josefin Sans", sans-serif;
+  text-align: center;
 }

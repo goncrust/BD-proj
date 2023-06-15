@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Gerir Encomendas</title>
+{% endblock %}
+
+{% block title %}
+    <h1>Gerir Encomendas</h1>
+{% endblock %}
+
+{% block body %}
+    <div class="management-grid">
+        <div class="elements">
+            {% if not sales %}
+                <h2>Não existem vendas.</h2>
+            {% else %}
+                <h2>Vendas</h2>
+            {% endif %}
+            {% for sale in sales %}
+                <div class="sale">
+                    Encomenda nº {{ sale.id }}, paga pelo cliente nº {{ sale.customer }}
+                </div>
+            {% endfor %}
+            {% if not orders %}
+                <h2>Não existem encomendas por pagar.</h2>
+            {% else %}
+                <h2>Encomendas</h2>
+            {% endif %}
+            {% for order in orders %}
+                <div class="order">
+                    Encomenda nº {{ order.id }}{% for product in order.products %}, {{product.name}} (Qty: {{product.qty}}){% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <form action="/gerir-encomendas/pay" method="POST">
+            <h2>Pagar Encomenda</h2>
+            <label for="cust_no">Nº do Cliente</label>
+            <br>
+            <input type="number" id="cust_no" name="cust_no" required>
+            <br>
+            <label for="order_no">Nº da Encomenda</label>
+            <br>
+            <input type="number" id="order_no" name="order_no" required>
+            <br>
+            <input type="submit" value="Submeter">
+        </form>    
+    </div>
+    <a href="/gerir-encomendas/new">
+        <div class="link-button">Nova Encomenda</div>
+    </a>
+{% endblock %}

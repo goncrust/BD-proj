@@ -15,10 +15,15 @@
                 <h2>Não existem produtos.</h2>
             {% endif %}
             {% for product in products %}
-                <form action="/gerir-produtos/{{ product.id }}/delete" method="POST">
-                    <label>Produto nº {{ product.id }}, {{ product.name }}</label>
-                    <input id="delete-{{ product.id }}" type="submit" value="Apagar">
-                </form>
+                <div class="product-edit-delete" id="{{ product.id }}">
+                    <div class="product-name">Produto nº {{ product.id }}, {{ product.name }}</div>
+                    <form class="edit-btn" action="/gerir-produtos/{{ product.id }}/edit" method="GET">
+                        <input id="edit-{{ product.id }}" type="submit" value="Editar">
+                    </form>
+                    <form class="del-btn" action="/gerir-produtos/{{ product.id }}/delete" method="POST">
+                        <input id="delete-{{ product.id }}" type="submit" value="Apagar">
+                    </form>
+                </div>
             {% endfor %}
         </div>
         <div class="add-form">
