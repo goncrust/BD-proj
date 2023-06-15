@@ -16,7 +16,9 @@
             {% endif %}
             {% for supplier in suppliers %}
                 <form action="/gerir-fornecedores/{{ supplier.id }}/delete" method="POST">
-                    <label>Fornecedor nº {{ supplier.id }}, {{ supplier.name }}</label>
+                    <label>
+                        Fornecedor nº {{ supplier.id }}{% if supplier.name %}, {{ supplier.name }} {% endif %}
+                    </label>
                     <input id="delete-{{ supplier.id }}" type="submit" value="Apagar">
                 </form>
             {% endfor %}
