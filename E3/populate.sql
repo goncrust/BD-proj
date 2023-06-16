@@ -6,11 +6,11 @@ VALUES
 
 INSERT INTO orders
 VALUES
-    (1, 2, '2023-01-26'),
-    (2, 1, '2023-01-28'),
-    (3, 2, '2023-05-22'),
+    (1, 2, '2022-01-26'),
+    (2, 1, '2022-01-28'),
+    (3, 2, '2022-05-22'),
     (4, 3, '2023-05-23'),
-    (5, 3, '2022-05-23');
+    (5, 3, '2023-05-23');
 
 INSERT INTO pay
 VALUES
@@ -84,11 +84,11 @@ VALUES
     
 INSERT INTO supplier
 VALUES
-    ('123409876', 'Bed Bath & Beyond', 'Queens Blvd, 1374-231 Coimbra', '99F5MN6', '2023-05-19'),
-    ('543210094', 'Espaço Casa', 'R. Angelina Vidal 12-A R/C, 1170-019 Lisboa', '26H1UR7', '2022-12-03'),
-    ('943290854', 'Leroy Merlin', 'Av. Berlim 10, 1800-038 Lisboa', '37J0LX1', '2022-12-03'),
-    ('487542039', 'Lidl', 'R. Américo Rodrigues Barbosa 29, 4710-008 Braga', '10P9QV2', '2023-01-25'),
-    ('312905843', 'IKEA', 'Zona Industrial de Alfragide Estrada Nacional 117, 2614-520 Amadora', '32C1VQ4', '2023-01-24');
+    ('123409876', 'Bed Bath & Beyond', 'Queens Blvd, 1374-231 Coimbra', '99F5MN6', '2022-05-19'),
+    ('543210094', 'Espaço Casa', 'R. Angelina Vidal 12-A R/C, 1170-019 Lisboa', '26H1UR7', '2021-12-03'),
+    ('943290854', 'Leroy Merlin', 'Av. Berlim 10, 1800-038 Lisboa', '37J0LX1', '2021-12-03'),
+    ('487542039', 'Lidl', 'R. Américo Rodrigues Barbosa 29, 4710-008 Braga', '10P9QV2', '2022-01-25'),
+    ('312905843', 'IKEA', 'Zona Industrial de Alfragide Estrada Nacional 117, 2614-520 Amadora', '32C1VQ4', '2022-01-24');
     
 INSERT INTO delivery
 VALUES
