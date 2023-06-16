@@ -7,7 +7,9 @@ import os
 import re
 
 email_regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
-float_regex = re.compile(r'\d+[.,]\d+')
+float_regex = re.compile(r'\d{0,10}[.,]\d{0,2}')
+address_regex = re.compile(r'[A-Za-z0-9 ]+, \d{4}-\d{3} [A-Za-z ]+')
+phone_regex = re.compile(r'\+*[0-9]+\s?[0-9]+')
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "postgres://tester:tester@postgres/testerdb")
 pool = ConnectionPool(conninfo=DATABASE_URL)
@@ -71,12 +73,14 @@ def gerir_clientes_add():
     address = request.form["address"] if request.form["address"] else None
     error = ""
     
-    if not name:
+    if not name or len(name) > 80:
         error = "Nome inválido"
-    elif not email or not re.fullmatch(email_regex, email):
+    elif not email or not re.fullmatch(email_regex, email) or len(email) > 254:
         error = "Email inválido"
-    elif phone != None and not phone.isnumeric():
+    elif phone is not None and (not re.fullmatch(phone_regex, phone) or len(phone) > 15):
         error = "Telemóvel inválido"
+    elif address is not None and (not re.fullmatch(address_regex, address) or len(address) > 255):
+        error = "Morada inválida"
 
     if error:
         flash(error)
@@ -163,13 +167,11 @@ def gerir_produtos_edit(sku):
         ean = request.form["ean"] if request.form["ean"] else None
         error = ""
         
-        if not name:
+        if not name or len(name) > 200:
             error = "Nome inválido"
-        elif not price or (not price.isnumeric() and not re.fullmatch(float_regex, price)):
+        elif not price or not re.fullmatch(float_regex, price) or float(price) < 0:
             error = "Preço inválido"
-        elif float(price) < 0:
-            error = "Preço inválido"
-        elif ean != None and not ean.isnumeric():
+        elif ean is not None and (not ean.isnumeric() or len(ean) != 13):
             error = "EAN inválido"
     
         if error:
@@ -208,16 +210,14 @@ def gerir_produtos_add():
     price = request.form["price"]
     ean = request.form["ean"] if request.form["ean"] else None
     error = ""
-    
-    if not sku:
+
+    if not sku or len(sku) > 25:
         error = "SKU inválido"
-    elif not name:
+    elif not name or len(name) > 200:
         error = "Nome inválido"
-    elif not price or (not price.isnumeric() and not re.fullmatch(float_regex, price)):
+    elif not price or not re.fullmatch(float_regex, price) or float(price) < 0:
         error = "Preço inválido"
-    elif float(price) < 0:
-        error = "Preço inválido"
-    elif ean != None and not ean.isnumeric():
+    elif ean is not None and (not ean.isnumeric() or len(ean) != 13):
         error = "EAN inválido"
 
     if error:
@@ -274,9 +274,13 @@ def gerir_fornecedores_add():
     sku = request.form["sku"]
     error = ""
     
-    if not tin:
+    if not tin or len(tin) > 20:
         error = "TIN inválido"
-    elif not sku:
+    elif name is not None and len(name) > 200:
+        error = "Nome inválido"
+    elif address is not None and (not re.fullmatch(address_regex, address) or len(address) > 255):
+        error = "Morada inválida"
+    elif not sku or len(sku) > 25:
         error = "SKU inválido"
 
     if error:
@@ -334,9 +338,9 @@ def gerir_encomenda_pay():
     order_no = request.form["order_no"]
     error = ""
 
-    if not cust_no:
+    if not cust_no or not cust_no.isnumeric():
         error = "Número de cliente inválido"
-    elif not order_no:
+    elif not order_no or not order_no.isnumeric():
         error = "Número de encomenda inválido"
 
     if error:
@@ -381,7 +385,7 @@ def realizar_encomenda():
                     break
                 products.append((key, request.form[key]))
     
-        if not cust_no:
+        if (cust_no is not None and not cust_no.isnumeric()):
             error = "Número de cliente inválido"
         elif not products:
             error = "Nenhum produto selecionado"
