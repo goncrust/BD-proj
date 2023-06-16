@@ -21,7 +21,7 @@
                         <input id="edit-{{ product.id }}" type="submit" value="Editar">
                     </form>
                     <form class="del-btn" action="/gerir-produtos/{{ product.id }}/delete" method="POST">
-                        <input id="delete-{{ product.id }}" type="submit" value="Apagar">
+                        <input id="delete-{{ product.id }}" type="submit" value="Apagar" onclick="return confirm('Esta ação vai remover permanentemente o produto {{ product.id }} e todas as suas dependências, deseja prosseguir?');">
                     </form>
                 </div>
             {% endfor %}

@@ -19,7 +19,7 @@
                     <label>
                         Fornecedor nº {{ supplier.id }}{% if supplier.name %}, {{ supplier.name }} {% endif %}
                     </label>
-                    <input id="delete-{{ supplier.id }}" type="submit" value="Apagar">
+                    <input id="delete-{{ supplier.id }}" type="submit" value="Apagar" onclick="return confirm('Esta ação vai remover permanentemente o fornecedor {{ supplier.id }} e todas as suas dependências, deseja prosseguir?');">
                 </form>
             {% endfor %}
         </div>
@@ -38,9 +38,9 @@
                 <br>
                 <input id="address" type="text" name="address">
                 <br>
-                <label for="address">SKU</label>
+                <label for="address">SKU (Opcional)</label>
                 <br>
-                <input id="sku" type="text" name="sku" required>
+                <input id="sku" type="text" name="sku">
                 <br>
                 <input id="submit" type="submit" value="Adicionar">
             </form>    

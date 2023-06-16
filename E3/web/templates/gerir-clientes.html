@@ -17,7 +17,7 @@
             {% for client in clients %}
                 <form action="/gerir-clientes/{{ client.id }}/delete" method="POST">
                     <label>Cliente nº {{ client.id }}, {{ client.name }}</label>
-                    <input id="delete-{{ client.id }}" type="submit" value="Apagar">
+                    <input id="delete-{{ client.id }}" type="submit" value="Apagar" onclick="return confirm('Esta ação vai remover permanentemente o cliente {{ client.id }}, deseja prosseguir?');">
                 </form>
             {% endfor %}
         </div>

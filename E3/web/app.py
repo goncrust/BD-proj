@@ -271,7 +271,7 @@ def gerir_fornecedores_add():
     tin = request.form["tin"]
     name = request.form["name"] if request.form["name"] else None
     address = request.form["address"] if request.form["address"] else None
-    sku = request.form["sku"]
+    sku = request.form["sku"] if request.form["sku"] else None
     error = ""
     
     if not tin or len(tin) > 20:
@@ -280,7 +280,7 @@ def gerir_fornecedores_add():
         error = "Nome inválido"
     elif address is not None and (not re.fullmatch(address_regex, address) or len(address) > 255):
         error = "Morada inválida"
-    elif not sku or len(sku) > 25:
+    elif sku is not None and len(sku) > 25:
         error = "SKU inválido"
 
     if error:
@@ -292,9 +292,11 @@ def gerir_fornecedores_add():
                 existing_tin = cursor.execute("SELECT tin FROM supplier WHERE tin = %(tin)s;", {"tin": tin}).fetchone()
                 if existing_tin:
                     error = "O TIN já existe"
-                existing_sku = cursor.execute("SELECT sku FROM product WHERE sku = %(sku)s;", {"sku": sku}).fetchone()
-                if not existing_sku:
-                    error = "O SKU não existe"
+                elif sku is not None:
+                    existing_sku = cursor.execute("SELECT sku FROM product WHERE sku = %(sku)s;", {"sku": sku}).fetchone()
+                    if not existing_sku:
+                        error = "O SKU não existe"
+
                 if error:
                     flash(error)
                 else:
@@ -425,7 +427,7 @@ def realizar_encomenda():
                             cursor.execute("INSERT INTO contains VALUES (%(order_no)s, %(sku)s, %(quantity)s);", {"order_no": order_no, "sku": product[0], "quantity": product[1]})
 
                     cursor.execute("COMMIT;")
-        return redirect("/gerir-encomendas")
+        return redirect("/realizar-encomenda")
     else:
         with pool.connection() as conn:
             with conn.cursor() as cursor:
