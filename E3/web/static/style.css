@@ -45,7 +45,6 @@ input[type="text"],
 input[type="email"],
 input[type="number"] {
   outline: inherit;
-
   font-size: 1rem;
   font-family: "Josefin Sans", sans-serif;
   border-bottom: 2px solid #cecccf;
@@ -65,6 +64,7 @@ input[type="number"]:focus {
   outline: none;
 }
 
+.nav-btn,
 input[type="submit"] {
   background: none;
   color: inherit;
@@ -85,8 +85,13 @@ input[type="submit"] {
   background-color: #eeeeee;
 }
 
+.nav-btn:hover,
 input[type="submit"]:hover {
   border: 2px solid #000100;
+}
+
+.nav-btn {
+  margin-top: 1rem;
 }
 
 a,

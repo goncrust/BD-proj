@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
+    <script src="{{url_for('static', filename='page.js')}}"></script>
     <title>Gerir Produtos</title>
 {% endblock %}
 
@@ -13,17 +14,34 @@
         <div class="elements">
             {% if not products %}
                 <h2>Não existem produtos.</h2>
+            {% else %}
+                {% for i in range(pcount) %}
+                    <div class="page" id="{{ i }}" {% if not loop.first %} style="display: none;" {% endif %}>
+                        {% for j in range(i*psize, i*psize + psize) if j < products|length %}
+                            <div class="product-edit-delete" id="{{ products[j].id }}">
+                                <div class="product-name">Produto nº {{ products[j].id }}, {{ products[j].name }}</div>
+                                <form class="edit-btn" action="/gerir-produtos/{{ products[j].id }}/edit" method="GET">
+                                    <input id="edit-{{ products[j].id }}" type="submit" value="Editar">
+                                </form>
+                                <form class="del-btn" action="/gerir-produtos/{{ products[j].id }}/delete" method="POST">
+                                    <input id="delete-{{ products[j].id }}" type="submit" value="Apagar" onclick="return confirm('Esta ação vai remover permanentemente o produto {{ products[j].id }} e todas as suas dependências, deseja prosseguir?');">
+                                </form>
+                            </div>
+                        {% endfor %}
+                        {% if not loop.first %}
+                            <button class="nav-btn" onclick="return previousPage(this)">
+                                Anterior
+                            </button>
+                        {% endif %}
+                        {% if not loop.last %}
+                            <button class="nav-btn" onclick="return nextPage(this)">
+                                Seguinte
+                            </button>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             {% endif %}
             {% for product in products %}
-                <div class="product-edit-delete" id="{{ product.id }}">
-                    <div class="product-name">Produto nº {{ product.id }}, {{ product.name }}</div>
-                    <form class="edit-btn" action="/gerir-produtos/{{ product.id }}/edit" method="GET">
-                        <input id="edit-{{ product.id }}" type="submit" value="Editar">
-                    </form>
-                    <form class="del-btn" action="/gerir-produtos/{{ product.id }}/delete" method="POST">
-                        <input id="delete-{{ product.id }}" type="submit" value="Apagar" onclick="return confirm('Esta ação vai remover permanentemente o produto {{ product.id }} e todas as suas dependências, deseja prosseguir?');">
-                    </form>
-                </div>
             {% endfor %}
         </div>
         <div class="add-form">

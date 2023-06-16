@@ -55,7 +55,9 @@ def gerir_clientes():
             cursor.execute("SELECT cust_no, name FROM customer WHERE NOT email LIKE '%%deleted';")
             parser = lambda el : {"id": el[0], "name": el[1]}
             clients = list(map(parser, cursor.fetchall()))
-    return render_template("gerir-clientes.html", clients=clients)
+            psize = 5
+            pcount = len(clients) // psize + 1 if len(clients) % psize != 0 else len(clients) // psize
+    return render_template("gerir-clientes.html", clients=clients, pcount=pcount, psize=psize)
 
 @app.route("/gerir-clientes/<cust_no>/delete", methods=("POST",))
 def gerir_clientes_delete(cust_no):
@@ -117,7 +119,9 @@ def gerir_produtos():
             cursor.execute("SELECT SKU, name FROM product;")
             parser = lambda el : {"id": el[0], "name": el[1]}
             products = list(map(parser, cursor.fetchall()))
-    return render_template("gerir-produtos.html", products=products)
+            psize = 5
+            pcount = len(products) // psize + 1 if len(products) % psize != 0 else len(products) // psize
+    return render_template("gerir-produtos.html", products=products, pcount=pcount, psize=psize)
 
 @app.route("/gerir-produtos/<sku>/delete", methods=("POST",))
 def gerir_produtos_delete(sku):
@@ -169,7 +173,7 @@ def gerir_produtos_edit(sku):
         
         if not name or len(name) > 200:
             error = "Nome inválido"
-        elif not price or not re.fullmatch(float_regex, price) or float(price) < 0:
+        elif not price or (not re.fullmatch(float_regex, price) and not price.isnumeric()) or float(price) < 0:
             error = "Preço inválido"
         elif ean is not None and (not ean.isnumeric() or len(ean) != 13):
             error = "EAN inválido"
@@ -215,7 +219,7 @@ def gerir_produtos_add():
         error = "SKU inválido"
     elif not name or len(name) > 200:
         error = "Nome inválido"
-    elif not price or not re.fullmatch(float_regex, price) or float(price) < 0:
+    elif not price or (not re.fullmatch(float_regex, price) and not price.isnumeric()) or float(price) < 0:
         error = "Preço inválido"
     elif ean is not None and (not ean.isnumeric() or len(ean) != 13):
         error = "EAN inválido"
@@ -254,7 +258,9 @@ def gerir_fornecedores():
             cursor.execute("SELECT TIN, name FROM supplier;")
             parser = lambda el : {"id": el[0], "name": el[1] if el[1] != None else ""}
             suppliers = list(map(parser, cursor.fetchall()))
-    return render_template("gerir-fornecedores.html", suppliers=suppliers)
+            psize = 5
+            pcount = len(suppliers) // psize + 1 if len(suppliers) % psize != 0 else len(suppliers) // psize
+    return render_template("gerir-fornecedores.html", suppliers=suppliers, pcount=pcount, psize=psize)
 
 @app.route("/gerir-fornecedores/<tin>/delete", methods=("POST",))
 def gerir_fornecedores_delete(tin):
@@ -332,7 +338,13 @@ def gerir_encomendas():
             cursor.execute("SELECT order_no, cust_no FROM pay;")
             sales = list(map(parser, cursor.fetchall()))
 
-    return render_template("gerir-encomendas.html", orders=orders, sales=sales)
+            opsize = 5
+            opcount = len(orders) // opsize + 1 if len(orders) % opsize != 0 else len(orders) // opsize
+
+            spsize = 5
+            spcount = len(sales) // spsize + 1 if len(sales) % spsize != 0 else len(sales) // spsize
+
+    return render_template("gerir-encomendas.html", sales=sales, orders=orders, spcount=spcount, spsize=spsize, opcount=opcount, opsize=opsize)
 
 @app.route("/gerir-encomendas/pay", methods=("POST",))
 def gerir_encomenda_pay():

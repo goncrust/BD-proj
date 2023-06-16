@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
+    <script src="{{url_for('static', filename='page.js')}}"></script>
     <title>Gerir Clientes</title>
 {% endblock %}
 
@@ -13,13 +14,28 @@
         <div class="elements">
             {% if not clients %}
                 <h2>Não existem clientes.</h2>
+            {% else %}
+                {% for i in range(pcount) %}
+                    <div class="page" id="{{ i }}" {% if not loop.first %} style="display: none;" {% endif %}>
+                        {% for j in range(i*psize, i*psize + psize) if j < clients|length %}
+                            <form action="/gerir-clientes/{{ clients[j].id }}/delete" method="POST">
+                                <label>Cliente nº {{ clients[j].id }}, {{ clients[j].name }}</label>
+                                <input id="delete-{{ clients[j].id }}" type="submit" value="Apagar" onclick="return confirm('Esta ação vai remover permanentemente o cliente {{ clients[j].id }}, deseja prosseguir?');">
+                            </form>
+                        {% endfor %}
+                        {% if not loop.first %}
+                            <button class="nav-btn" onclick="return previousPage(this)">
+                                Anterior
+                            </button>
+                        {% endif %}
+                        {% if not loop.last %}
+                            <button class="nav-btn" onclick="return nextPage(this)">
+                                Seguinte
+                            </button>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             {% endif %}
-            {% for client in clients %}
-                <form action="/gerir-clientes/{{ client.id }}/delete" method="POST">
-                    <label>Cliente nº {{ client.id }}, {{ client.name }}</label>
-                    <input id="delete-{{ client.id }}" type="submit" value="Apagar" onclick="return confirm('Esta ação vai remover permanentemente o cliente {{ client.id }}, deseja prosseguir?');">
-                </form>
-            {% endfor %}
         </div>
         <div class="add-form">
             <h2>Novo Cliente</h2>

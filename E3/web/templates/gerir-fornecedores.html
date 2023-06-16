@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
+    <script src="{{url_for('static', filename='page.js')}}"></script>
     <title>Gerir Fornecedores</title>
 {% endblock %}
 
@@ -13,15 +14,28 @@
         <div class="elements">
             {% if not suppliers %}
                 <h2>Não existem fornecedores.</h2>
+            {% else %}
+                {% for i in range(pcount) %}
+                    <div class="page" id="{{ i }}" {% if not loop.first %} style="display: none;" {% endif %}>
+                        {% for j in range(i*psize, i*psize + psize) if j < suppliers|length %}
+                            <form action="/gerir-fornecedores/{{ suppliers[j].id }}/delete" method="POST">
+                                <label>Fornecedor nº {{ suppliers[j].id }}, {{ suppliers[j].name }}</label>
+                                <input id="delete-{{ suppliers[j].id }}" type="submit" value="Apagar" onclick="return confirm('Esta ação vai remover permanentemente o fornecedor {{ suppliers[j].id }} e todas as suas dependências, deseja prosseguir?');">
+                            </form>
+                        {% endfor %}
+                        {% if not loop.first %}
+                            <button class="nav-btn" onclick="return previousPage(this)">
+                                Anterior
+                            </button>
+                        {% endif %}
+                        {% if not loop.last %}
+                            <button class="nav-btn" onclick="return nextPage(this)">
+                                Seguinte
+                            </button>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             {% endif %}
-            {% for supplier in suppliers %}
-                <form action="/gerir-fornecedores/{{ supplier.id }}/delete" method="POST">
-                    <label>
-                        Fornecedor nº {{ supplier.id }}{% if supplier.name %}, {{ supplier.name }} {% endif %}
-                    </label>
-                    <input id="delete-{{ supplier.id }}" type="submit" value="Apagar" onclick="return confirm('Esta ação vai remover permanentemente o fornecedor {{ supplier.id }} e todas as suas dependências, deseja prosseguir?');">
-                </form>
-            {% endfor %}
         </div>
         <div class="add-form">
             <h2>Novo Fornecedor</h2>
