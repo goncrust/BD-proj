@@ -9,7 +9,7 @@ import re
 email_regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 float_regex = re.compile(r'\d+[.,]\d+')
 
-DATABASE_URL = os.environ.get("DATABASE_URL", "postgres://db:db@postgres/db")
+DATABASE_URL = os.environ.get("DATABASE_URL", "postgres://tester:tester@postgres/testerdb")
 pool = ConnectionPool(conninfo=DATABASE_URL)
 
 app = Flask(__name__)

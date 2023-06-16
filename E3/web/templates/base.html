@@ -19,18 +19,20 @@
     {% block head %} {% endblock %}
   </head>
   <body>
-    <nav><a href="/">{% block title %} {% endblock %}</a></nav>
+    <nav><a href="/">Empresa de Comércio Online</a></nav>
+    
+    <div class=main>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class=flashes>
+            {% for message in messages %}
+              <div class="flash">{{ message }}</div>
+            {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
 
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <div class=flashes>
-        {% for message in messages %}
-          <div class="flash">{{ message }}</div>
-        {% endfor %}
-        </div>
-      {% endif %}
-    {% endwith %}
-
-    {% block body %} {% endblock %}
+        {% block body %} {% endblock %}
+    </div>
   </body>
 </html>
